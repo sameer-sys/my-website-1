@@ -1,3 +1,4 @@
+/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -5,35 +6,166 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   line-height: 1.6;
-  background-color: #f9f9f9;
+  background: #f9f9f9;
   color: #333;
-  padding: 20px;
+  padding: 10px;
+  transition: background 0.3s, color 0.3s;
 }
 
-header {
-  background-color: #4caf50;
+/* Dark mode */
+body.dark-mode {
+  background: #121212;
+  color: #eee;
+}
+
+#darkToggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Navigation bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4caf50;
+  padding: 10px 20px;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.navbar .nav-brand {
   color: white;
-  padding: 30px 20px;
+  font-size: 1.5em;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar .nav-links {
+    flex-direction: column;
+    width: 100%;
+    display: none;
+  }
+  .navbar .nav-links.active {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Header */
+header {
   text-align: center;
-  border-radius: 8px;
-}
-
-main {
+  padding: 40px 10px;
+  background: #e3f5e0;
   margin: 20px 0;
+  border-radius: 10px;
 }
 
+/* Sections */
 section {
-  margin-bottom: 20px;
+  margin: 30px 0;
+  padding: 20px;
   background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
+body.dark-mode section {
+  background: #1e1e1e;
+}
+
+/* Gallery */
+.gallery {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+}
+
+/* Contact form */
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #388e3c;
+}
+
+/* Chatbox */
+.chatbox {
+  background: #f1f1f1;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+#chatlog {
+  height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#userInput {
+  width: calc(100% - 80px);
+  padding: 10px;
+}
+
+.chatbox button {
+  padding: 10px;
+}
+
+/* Footer */
 footer {
   text-align: center;
-  margin-top: 30px;
+  padding: 20px;
+  font-size: 14px;
   color: #777;
 }

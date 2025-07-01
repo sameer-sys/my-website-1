@@ -1,50 +1,61 @@
-// 🌙 Toggle Dark Mode
-const toggleBtn = document.getElementById('darkToggle');
-toggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
+const dropArea = document.getElementById("drop-area");
+const fileElem = document.getElementById("fileElem");
+const previewFrame = document.getElementById("preview-frame");
+
+// Handle file input (manual click or drag)
+dropArea.addEventListener("click", () => fileElem.click());
+
+fileElem.addEventListener("change", handleFiles);
+dropArea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropArea.style.borderColor = "#4caf50";
+});
+dropArea.addEventListener("dragleave", () => {
+  dropArea.style.borderColor = "#aaa";
+});
+dropArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropArea.style.borderColor = "#aaa";
+  const files = e.dataTransfer.files;
+  handleFiles({ target: { files } });
 });
 
-// 📱 Toggle Mobile Navbar
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
-});
-
-// 🤖 Basic AI Chatbot Logic (mocked)
-function sendChat() {
-  const input = document.getElementById('userInput');
-  const chatlog = document.getElementById('chatlog');
-  const userMsg = input.value.trim();
-
-  if (userMsg === '') return;
-
-  // Show user message
-  const userBubble = document.createElement('div');
-  userBubble.innerHTML = `<strong>You:</strong> ${userMsg}`;
-  chatlog.appendChild(userBubble);
-
-  // Simulate bot reply
-  const botBubble = document.createElement('div');
-  setTimeout(() => {
-    botBubble.innerHTML = `<strong>Bot:</strong> ${getBotResponse(userMsg)}`;
-    chatlog.appendChild(botBubble);
-    chatlog.scrollTop = chatlog.scrollHeight;
-  }, 500);
-
-  input.value = '';
-}
-
-function getBotResponse(msg) {
-  const lower = msg.toLowerCase();
-  if (lower.includes('hello') || lower.includes('hi')) {
-    return 'Hey there! 👋';
-  } else if (lower.includes('your name')) {
-    return 'I’m your AI assistant!';
-  } else if (lower.includes('help')) {
-    return 'Ask me anything about this website!';
-  } else {
-    return 'Sorry, I’m still learning. 😊';
+// Core zip processing
+async function handleFiles(e) {
+  const file = e.target.files[0];
+  if (!file || !file.name.endsWith(".zip")) {
+    alert("Please upload a .zip file containing HTML/CSS/JS files.");
+    return;
   }
+
+  const zip = await JSZip.loadAsync(file);
+  const htmlFile = Object.keys(zip.files).find(name => name.toLowerCase().endsWith("index.html"));
+
+  if (!htmlFile) {
+    alert("Your ZIP must include an index.html file.");
+    return;
+  }
+
+  const baseURL = URL.createObjectURL(new Blob([])); // base placeholder
+  const filesMap = {};
+
+  // Extract all files
+  for (const [filename, fileData] of Object.entries(zip.files)) {
+    if (!fileData.dir) {
+      const blob = await fileData.async("blob");
+      const blobUrl = URL.createObjectURL(blob);
+      filesMap[filename] = blobUrl;
+    }
+  }
+
+  // Load index.html and rewrite URLs for CSS/JS
+  const htmlText = await zip.files[htmlFile].async("text");
+  const rewrittenHTML = htmlText.replace(/(src|href)="(.*?)"/g, (match, attr, url) => {
+    const file = filesMap[url] || url;
+    return `${attr}="${file}"`;
+  });
+
+  const finalBlob = new Blob([rewrittenHTML], { type: "text/html" });
+  const finalURL = URL.createObjectURL(finalBlob);
+  previewFrame.src = finalURL;
 }

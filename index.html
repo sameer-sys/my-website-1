@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MiniHost by Sameer</title>
+  <title>SameerHost - Instant Site Hosting</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🚀 MiniHost</h1>
-    <p>Upload your HTML/CSS/JS zip file and preview it instantly.</p>
+    <h1>🌐 SameerHost</h1>
+    <p>Upload your HTML/CSS/JS ZIP and get a live public link instantly.</p>
 
-    <!-- Drag & Drop Area -->
     <div id="drop-area">
-      <p>📦 Drag & drop your ZIP file here</p>
+      <p><strong>Drag & drop your .zip file here</strong></p>
       <p>or</p>
       <input type="file" id="fileElem" accept=".zip" />
+      <button id="uploadBtn">Upload</button>
     </div>
 
-    <!-- Preview Section -->
-    <div id="preview-section">
-      <h2>🧪 Live Preview</h2>
-      <iframe id="preview-frame"></iframe>
+    <div id="progress" style="display:none;">
+      ⏳ Uploading... please wait
     </div>
+
+    <div id="result"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

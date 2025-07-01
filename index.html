@@ -3,72 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sameer's Super Website</title>
+  <title>MiniHost by Sameer</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- 🌙 Dark Mode Toggle -->
-  <button id="darkToggle">🌓 Toggle Dark Mode</button>
+  <div class="container">
+    <h1>🚀 MiniHost</h1>
+    <p>Upload your HTML/CSS/JS zip file and preview it instantly.</p>
 
-  <!-- 🔝 Navigation -->
-  <nav class="navbar">
-    <div class="nav-brand">Sameer</div>
-    <button class="hamburger">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#chatbot">AI Chat</a></li>
-    </ul>
-  </nav>
-
-  <!-- 👋 Header -->
-  <header>
-    <h1>Welcome to Sameer's Smart Website</h1>
-    <p>A beautiful, AI-powered, mobile-ready website!</p>
-  </header>
-
-  <!-- 🧑‍💼 About Section -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I’m Sameer Shaik, and this is my space on the internet. Built with love, code, and some AI magic.</p>
-  </section>
-
-  <!-- 🖼️ Image Gallery -->
-  <section id="gallery">
-    <h2>Image Gallery</h2>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/300x200" alt="Placeholder 1" />
-      <img src="https://via.placeholder.com/300x200" alt="Placeholder 2" />
-      <img src="https://via.placeholder.com/300x200" alt="Placeholder 3" />
+    <!-- Drag & Drop Area -->
+    <div id="drop-area">
+      <p>📦 Drag & drop your ZIP file here</p>
+      <p>or</p>
+      <input type="file" id="fileElem" accept=".zip" />
     </div>
-  </section>
 
-  <!-- 📨 Contact Form -->
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <form action="https://formspree.io/f/mnqeqjjw" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="_replyto" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
-
-  <!-- 🤖 AI Chatbot -->
-  <section id="chatbot">
-    <h2>AI Chat Assistant</h2>
-    <div class="chatbox">
-      <div id="chatlog"></div>
-      <input type="text" id="userInput" placeholder="Ask something..." />
-      <button onclick="sendChat()">Send</button>
+    <!-- Preview Section -->
+    <div id="preview-section">
+      <h2>🧪 Live Preview</h2>
+      <iframe id="preview-frame"></iframe>
     </div>
-  </section>
+  </div>
 
-  <!-- 🔻 Footer -->
-  <footer>
-    <p>© 2025 Sameer's Smart Site | Powered by AI 🤖</p>
-  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,61 +1,49 @@
+const fileInput = document.getElementById("fileElem");
+const uploadBtn = document.getElementById("uploadBtn");
+const progress = document.getElementById("progress");
+const result = document.getElementById("result");
 const dropArea = document.getElementById("drop-area");
-const fileElem = document.getElementById("fileElem");
-const previewFrame = document.getElementById("preview-frame");
 
-// Handle file input (manual click or drag)
-dropArea.addEventListener("click", () => fileElem.click());
-
-fileElem.addEventListener("change", handleFiles);
 dropArea.addEventListener("dragover", (e) => {
   e.preventDefault();
   dropArea.style.borderColor = "#4caf50";
 });
+
 dropArea.addEventListener("dragleave", () => {
-  dropArea.style.borderColor = "#aaa";
+  dropArea.style.borderColor = "#bbb";
 });
+
 dropArea.addEventListener("drop", (e) => {
   e.preventDefault();
-  dropArea.style.borderColor = "#aaa";
-  const files = e.dataTransfer.files;
-  handleFiles({ target: { files } });
+  dropArea.style.borderColor = "#bbb";
+  fileInput.files = e.dataTransfer.files;
 });
 
-// Core zip processing
-async function handleFiles(e) {
-  const file = e.target.files[0];
+uploadBtn.addEventListener("click", () => {
+  const file = fileInput.files[0];
   if (!file || !file.name.endsWith(".zip")) {
-    alert("Please upload a .zip file containing HTML/CSS/JS files.");
+    alert("Please select a .zip file with index.html inside.");
     return;
   }
 
-  const zip = await JSZip.loadAsync(file);
-  const htmlFile = Object.keys(zip.files).find(name => name.toLowerCase().endsWith("index.html"));
+  const formData = new FormData();
+  formData.append("zipfile", file);
 
-  if (!htmlFile) {
-    alert("Your ZIP must include an index.html file.");
-    return;
-  }
+  progress.style.display = "block";
+  result.innerHTML = "";
 
-  const baseURL = URL.createObjectURL(new Blob([])); // base placeholder
-  const filesMap = {};
-
-  // Extract all files
-  for (const [filename, fileData] of Object.entries(zip.files)) {
-    if (!fileData.dir) {
-      const blob = await fileData.async("blob");
-      const blobUrl = URL.createObjectURL(blob);
-      filesMap[filename] = blobUrl;
-    }
-  }
-
-  // Load index.html and rewrite URLs for CSS/JS
-  const htmlText = await zip.files[htmlFile].async("text");
-  const rewrittenHTML = htmlText.replace(/(src|href)="(.*?)"/g, (match, attr, url) => {
-    const file = filesMap[url] || url;
-    return `${attr}="${file}"`;
-  });
-
-  const finalBlob = new Blob([rewrittenHTML], { type: "text/html" });
-  const finalURL = URL.createObjectURL(finalBlob);
-  previewFrame.src = finalURL;
-}
+  fetch("https://tiinyhost-sameer.onrender.com/upload", {
+    method: "POST",
+    body: formData
+  })
+    .then(res => res.text())
+    .then(data => {
+      progress.style.display = "none";
+      result.innerHTML = data;
+    })
+    .catch(err => {
+      progress.style.display = "none";
+      result.innerHTML = "❌ Upload failed. Try again.";
+      console.error(err);
+    });
+});

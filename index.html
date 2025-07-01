@@ -2,30 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Awesome Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sameer's Super Website</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
+  <!-- 🌙 Dark Mode Toggle -->
+  <button id="darkToggle">🌓 Toggle Dark Mode</button>
+
+  <!-- 🔝 Navigation -->
+  <nav class="navbar">
+    <div class="nav-brand">Sameer</div>
+    <button class="hamburger">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#chatbot">AI Chat</a></li>
+    </ul>
+  </nav>
+
+  <!-- 👋 Header -->
   <header>
-    <h1>Welcome to My Website</h1>
-    <p>This is a simple and clean website made with love ❤️</p>
+    <h1>Welcome to Sameer's Smart Website</h1>
+    <p>A beautiful, AI-powered, mobile-ready website!</p>
   </header>
 
-  <main>
-    <section>
-      <h2>About</h2>
-      <p>This is your personal space on the web. You can edit this content any way you want.</p>
-    </section>
+  <!-- 🧑‍💼 About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I’m Sameer Shaik, and this is my space on the internet. Built with love, code, and some AI magic.</p>
+  </section>
 
-    <section>
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
-    </section>
-  </main>
+  <!-- 🖼️ Image Gallery -->
+  <section id="gallery">
+    <h2>Image Gallery</h2>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/300x200" alt="Placeholder 1" />
+      <img src="https://via.placeholder.com/300x200" alt="Placeholder 2" />
+      <img src="https://via.placeholder.com/300x200" alt="Placeholder 3" />
+    </div>
+  </section>
 
+  <!-- 📨 Contact Form -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/mnqeqjjw" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="_replyto" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <!-- 🤖 AI Chatbot -->
+  <section id="chatbot">
+    <h2>AI Chat Assistant</h2>
+    <div class="chatbox">
+      <div id="chatlog"></div>
+      <input type="text" id="userInput" placeholder="Ask something..." />
+      <button onclick="sendChat()">Send</button>
+    </div>
+  </section>
+
+  <!-- 🔻 Footer -->
   <footer>
-    <p>© 2025 My Awesome Website</p>
+    <p>© 2025 Sameer's Smart Site | Powered by AI 🤖</p>
   </footer>
 </body>
 </html>

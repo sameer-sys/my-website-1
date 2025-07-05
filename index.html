@@ -1,30 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SameerHost - Instant Site Hosting</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Mini TiinyHost</title>
+  <style>
+    body { font-family:Arial, sans-serif; text-align:center; padding:50px; }
+    #output a { color:green; font-weight:bold; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌐 SameerHost</h1>
-    <p>Upload your HTML/CSS/JS ZIP and get a live public link instantly.</p>
+  <h2>Upload Any File</h2>
+  <input id="file" type="file" />
+  <button onclick="upload()">Upload</button>
+  <div id="output" style="margin-top:20px;"></div>
 
-    <div id="drop-area">
-      <p><strong>Drag & drop your .zip file here</strong></p>
-      <p>or</p>
-      <input type="file" id="fileElem" accept=".zip" />
-      <button id="uploadBtn">Upload</button>
-    </div>
-
-    <div id="progress" style="display:none;">
-      ⏳ Uploading... please wait
-    </div>
-
-    <div id="result"></div>
-  </div>
-
-  <script src="script.js"></script>
+  <script>
+    async function upload() {
+      const fi = document.getElementById('file');
+      if (!fi.files.length) return alert('Select a file first');
+      const fd = new FormData();
+      fd.append('file', fi.files[0]);
+      const res = await fetch('https://mini-tiinyhost.onrender.com/upload', {
+        method: 'POST',
+        body: fd
+      });
+      const j = await res.json();
+      const out = document.getElementById('output');
+      if (j.url) {
+        const url = 'https://mini-tiinyhost.onrender.com' + j.url;
+        out.innerHTML = `✅ Uploaded: <br><a href="${url}" target="_blank">${url}</a>`;
+      } else {
+        out.textContent = `❌ Error: ${j.error || 'unknown'}`;
+      }
+    }
+  </script>
 </body>
 </html>
